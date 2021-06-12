@@ -34,7 +34,6 @@ jobs:
       - slack/notify:
           event: fail
           template: basic_fail_1
-          mentions: "@EngineeringTeam"
       # When there is a successful deployment, send a notification with a different template.
       - slack/notify:
           event: pass
