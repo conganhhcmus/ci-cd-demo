@@ -37,7 +37,7 @@ jobs:
       - checkout
       - run:
           name: Unit Test
-          command: echo "Unit Test"
+          command: npm run test
   
   build:
     executor:
