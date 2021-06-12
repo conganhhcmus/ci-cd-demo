@@ -52,8 +52,10 @@ jobs:
 
       # build and push Docker image
       - run: |
-          echo ${DOCKER_PASSWORD}
-          echo ${DOCKERHUB_USERNAME}
+          TAG=0.1.$CIRCLE_BUILD_NUM
+          docker build -t ci-cd-demo:$TAG .
+          echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+          docker push ci-cd-demo:$TAG
           
 
 
