@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@4.1
-  slack: circleci/slack@4.0
+  slack: circleci/slack@4.4.2
 
 executors:
   default:
@@ -32,12 +32,10 @@ jobs:
               
        # In the event the deployment has failed, alert the engineering team
       - slack/notify:
-          channel: general
           event: fail
           template: basic_fail_1
       # When there is a successful deployment, send a notification with a different template.
       - slack/notify:
-          channel: general
           event: pass
           template: success_tagged_deploy_1
   
