@@ -12,6 +12,17 @@ describe('GET /', () => {
     request(app).get('/')
       .then((res) => {
         const body = res.body;
+        expect(res.status).to.equal(200);
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  it('Fail, getting shop not found', (done) => {
+    request(app).get('/a')
+      .then((res) => {
+        const body = res.body;
+        expect(res.status).to.equal(404);
         done();
       })
       .catch((err) => done(err));

@@ -11,6 +11,7 @@ describe('GET /products', () => {
     request(app).get('/products')
       .then((res) => {
         const body = res.body;
+        expect(res.status).to.equal(200);
         done();
       })
       .catch((err) => done(err));

@@ -5,12 +5,10 @@ const request = require("supertest");
 
 const app = require("../../app.js");
 
-describe("POST /cart", () => {
-  it("OK, POST product into cart", (done) => {
+describe("POST /cart-delete-item", () => {
+  it("OK, POST delete cart item", (done) => {
     request(app)
-      .post("/cart")
-      .set('Accept', 'application/vnd.burgers.api+json')
-      .type("json")
+      .post("/cart-delete-item")
       .send({ productId: "0.6178021536602232" })
       .then((res) => {
         const body = res.body;
@@ -22,9 +20,8 @@ describe("POST /cart", () => {
 
   it("Fail, product id is not existed", (done) => {
     request(app)
-      .post("/cart")
-      .set('Accept', 'application/vnd.burgers.api+json')
-      .send({ productId: "0.61780215366022s32" })
+      .post("/cart-delete-item")
+      .send({ productId: "false" })
       .then((res) => {
         const body = res.body;
         expect(body.isSuccess).to.equal(false);
