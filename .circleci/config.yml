@@ -34,13 +34,12 @@ jobs:
   test:
     executor:
       name: default
-    # working_directory: ~/
+    working_directory: /home/circleci/project
     steps:
       - checkout
       - run:
           name: Unit Test
           command: |
-              npm install
               npm run test
   
   build:
@@ -55,11 +54,13 @@ jobs:
           docker_layer_caching: false
 
       # build and push Docker image
-      - run: |
-          TAG=0.1.$CIRCLE_BUILD_NUM
-          docker build -t conganhhcmus/ci-cd-demo:$TAG .
-          echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
-          docker push conganhhcmus/ci-cd-demo:$TAG
+      - run:
+          name: Build Docker
+          command: | 
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            docker build -t conganhhcmus/ci-cd-demo:$TAG .
+            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+            docker push conganhhcmus/ci-cd-demo:$TAG
           
 
 
