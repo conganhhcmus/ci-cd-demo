@@ -9,7 +9,7 @@ describe('GET /shop/order', () => {
 
 
   it('OK, getting order', (done) => {
-    request(app).get('/shop/order')
+    request(app).get('/')
       .then((res) => {
         const body = res.body;
         expect(body.length).toBeGreaterThan(0);
