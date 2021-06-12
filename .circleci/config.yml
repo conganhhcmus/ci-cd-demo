@@ -58,8 +58,6 @@ jobs:
             docker build -t conganhhcmus/ci-cd-demo:$TAG .
             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
             docker push conganhhcmus/ci-cd-demo:$TAG
-          
-
 
   deploy:
     executor:
