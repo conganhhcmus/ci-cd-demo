@@ -2,7 +2,8 @@ version: 2.1
 
 orbs:
   node: circleci/node@4.1
-  slack: circleci/slack@4.0
+  slack: circleci/slack@4.4.2
+  heroku: circleci/heroku@1.2.6
 
 executors:
   default:
@@ -29,17 +30,11 @@ jobs:
           name: Unit Test
           command: |
               npm run test
-              
-       # In the event the deployment has failed, alert the engineering team
+    
       - slack/notify:
-          channel: general
           event: fail
           template: basic_fail_1
-      # When there is a successful deployment, send a notification with a different template.
-      - slack/notify:
-          channel: general
-          event: pass
-          template: success_tagged_deploy_1
+ 
   
   build:
     executor:
@@ -60,24 +55,34 @@ jobs:
             docker build -t conganhhcmus/ci-cd-demo:$TAG .
             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
             docker push conganhhcmus/ci-cd-demo:$TAG
-
+      
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      
   deploy:
-    executor:
-      name: default
-    # working_directory: ~/
+    executor: heroku/default
     steps:
-      - checkout 
-      - run: |
-          echo "deploy"
+      - checkout
+      - heroku/install
+      - heroku/deploy-via-git
 
-  katalon:
-    executor:
-      name: default
-    # working_directory: ~/
-    steps:
-      - checkout 
-      - run: |
-          echo " katalon"
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+          
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
+
+  # katalon:
+  #   executor:
+  #     name: default
+  #   steps:
+  #     - checkout 
+  #     - run: |
+  #         echo " katalon"
+
 
 
 workflows:
@@ -94,7 +99,5 @@ workflows:
       - deploy:
           requires:
             - build
-      - katalon:
-          requires:
-            - deploy
+
 
