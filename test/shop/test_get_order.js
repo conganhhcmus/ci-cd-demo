@@ -5,11 +5,10 @@ const request = require('supertest');
 
 const app = require('../../app.js');
 
-describe('GET /shop/order', () => {
+describe('GET /shop', () => {
 
-
-  it('OK, getting order', (done) => {
-    request(app).get('/')
+  it('OK, getting shop', (done) => {
+    request(app).get('/orders')
       .then((res) => {
         const body = res.body;
         done();
