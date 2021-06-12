@@ -45,6 +45,26 @@ jobs:
           ls -alt
           echo "build docker"
 
+  build-docker:
+    executor:
+      name: default
+      auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+    steps:
+      - checkout
+      # ... steps for building/testing app ...
+      - setup_remote_docker:
+          version: 19.03.13
+          docker_layer_caching: true
+
+      # build and push Docker image
+      - run: |
+          TAG=0.1.$CIRCLE_BUILD_NUM
+          docker build -t ci-cd-demo:$TAG .
+          echo $DOCKER_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+          docker push conganhhcmus/ci-cd-demo:$TAG
+
 
   deploy:
     executor:
