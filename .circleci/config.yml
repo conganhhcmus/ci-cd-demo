@@ -29,6 +29,7 @@ jobs:
           command: |
               node --version
               npm ci
+              ls -alt
   test:
     executor:
       name: default
@@ -37,7 +38,9 @@ jobs:
       - checkout
       - run:
           name: Unit Test
-          command: npm run test
+          command: |
+              npm install
+              npm run test
   
   build:
     executor:
