@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   node: circleci/node@4.1
   slack: circleci/slack@4.4.2
+  heroku: circleci/heroku@1.2.6
 
 executors:
   default:
@@ -63,12 +64,11 @@ jobs:
           template: basic_success_1
       
   deploy:
-    executor:
-      name: default
+    executor: heroku/default
     steps:
-      - checkout 
-      - run: |
-          echo "deploy"
+      - checkout
+      - heroku/install
+      - heroku/deploy-via-git
 
       - slack/notify:
           event: fail
