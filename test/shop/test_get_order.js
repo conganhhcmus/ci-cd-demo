@@ -5,9 +5,9 @@ const request = require('supertest');
 
 const app = require('../../app.js');
 
-describe('GET /shop', () => {
+describe('GET /orders', () => {
 
-  it('OK, getting shop', (done) => {
+  it('OK, getting order', (done) => {
     request(app).get('/orders')
       .then((res) => {
         const body = res.body;
