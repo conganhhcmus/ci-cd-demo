@@ -17,6 +17,6 @@ describe('GET /admin/products', () => {
 
         done();
       })
-      .catch((err) => done(err));
+      .catch((err) => done("Load wrong page"));
   });
 })
