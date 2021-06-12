@@ -5,10 +5,10 @@ const request = require('supertest');
 
 const app = require('../../app.js');
 
-describe('GET /admin/products', () => {
+describe('GET /admin/add-product', () => {
 
   it('OK, getting admin products', (done) => {
-    request(app).get('/admin/products')
+    request(app).get('/admin/add-product')
       .then((res) => {
         const body = res.body;
         done();
