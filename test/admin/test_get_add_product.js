@@ -12,6 +12,7 @@ describe('GET /admin/add-product', () => {
       .then((res) => {
         expect(res).to.be.html;
         expect(res.text).to.include('Title');
+        expect(res.statusCode).equals(200);
         done();
       })
       .catch((err) => done(err));
